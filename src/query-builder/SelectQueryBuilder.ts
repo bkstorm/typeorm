@@ -379,6 +379,16 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
     }
 
     /**
+     * LEFT LATERAL JOINs (without selection) given subquery.
+     * You also need to specify an alias of the joined data.
+     * Optionally, you can add condition and parameters used in condition.
+     */
+    leftLateralJoin(subQueryFactory: (qb: SelectQueryBuilder<any>) => SelectQueryBuilder<any>, alias: string, condition?: string, parameters?: ObjectLiteral): this {
+        this.join("LEFT", subQueryFactory, alias, condition ? condition : "true", parameters, undefined, undefined, true);
+        return this;
+    }
+
+    /**
      * INNER JOINs given subquery and adds all selection properties to SELECT..
      * You also need to specify an alias of the joined data.
      * Optionally, you can add condition and parameters used in condition.
@@ -1415,7 +1425,8 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
                    condition?: string,
                    parameters?: ObjectLiteral,
                    mapToProperty?: string,
-                   isMappingMany?: boolean): void {
+                   isMappingMany?: boolean,
+                   isLateral?: boolean): void {
 
         this.setParameters(parameters || {});
 
@@ -1425,6 +1436,7 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
         joinAttribute.isMappingMany = isMappingMany;
         joinAttribute.entityOrProperty = entityOrProperty; // relationName
         joinAttribute.condition = condition; // joinInverseSideCondition
+        joinAttribute.isLateral = isLateral;
         // joinAttribute.junctionAlias = joinAttribute.relation.isOwning ? parentAlias + "_" + destinationTableAlias : destinationTableAlias + "_" + parentAlias;
         this.expressionMap.joinAttributes.push(joinAttribute);
 
@@ -1585,7 +1597,7 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
             // table to join, without junction table involved. This means we simply join direct table.
             if (!parentAlias || !relation) {
                 const destinationJoin = joinAttr.alias.subQuery ? joinAttr.alias.subQuery : this.getTableName(destinationTableName);
-                return " " + joinAttr.direction + " JOIN " + destinationJoin + " " + this.escape(destinationTableAlias) +
+                return " " + joinAttr.direction + " JOIN " + (joinAttr.isLateral ? "LATERAL " : "") + destinationJoin + " " + this.escape(destinationTableAlias) +
                     (joinAttr.condition ? " ON " + this.replacePropertyNames(joinAttr.condition) : "");
             }
 

@@ -37,7 +37,7 @@ Add typeorm command under scripts section in package.json
 ```
 "scripts" {
     ...
-    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"    
+    "typeorm": "node --require ts-node/register ./node_modules/@bkstorm/typeorm/cli.js"
 }
 ```
 
@@ -79,7 +79,7 @@ Once all dependencies are installed, you need to modify `ormconfig.json` and ins
 After that, you can run your application by running `npm start`.
 
 All files are generated in the current directory.
-If you want to generate them in a special directory you can use `--name`: 
+If you want to generate them in a special directory you can use `--name`:
 
 ```
 typeorm init --name my-project
@@ -114,7 +114,7 @@ You can create a new entity using CLI:
 typeorm entity:create -n User
 ```
 
-where `User` is an entity file and class name. 
+where `User` is an entity file and class name.
 Running the command will create a new empty entity in `entitiesDir` of the project.
 To setup the `entitiesDir` of the project you must add it in connection options:
 
@@ -130,7 +130,7 @@ Learn more about [connection options](./connection-options.md).
 If you have a multi-module project structure with multiple entities in different directories
 you can provide the path to the CLI command where you want to generate an entity:
 
- 
+
 ```
 typeorm entity:create -n User -d src/user/entity
 ```
@@ -145,7 +145,7 @@ You can create a new subscriber using CLI:
 typeorm subscriber:create -n UserSubscriber
 ```
 
-where `UserSubscriber` is a subscriber file and class name. 
+where `UserSubscriber` is a subscriber file and class name.
 Running the following command will create a new empty subscriber in the `subscribersDir` of the project.
 To setup `subscribersDir` you must add it in connection options:
 
@@ -161,7 +161,7 @@ Learn more about [connection options](./connection-options.md).
 If you have a multi-module project structure with multiple subscribers in different directories
 you can provide a path to the CLI command where you want to generate a subscriber:
 
- 
+
 ```
 typeorm subscriber:create -n UserSubscriber -d src/user/subscriber
 ```
@@ -176,7 +176,7 @@ You can create a new migration using CLI:
 typeorm migration:create -n UserMigration
 ```
 
-where `UserMigration` is a migration file and class name. 
+where `UserMigration` is a migration file and class name.
 Running the command will create a new empty migration in the `migrationsDir` of the project.
 To setup `migrationsDir` you must add it in connection options:
 
@@ -253,7 +253,7 @@ To synchronize a database schema use:
 typeorm schema:sync
 ```
 
-Be careful running this command in production - 
+Be careful running this command in production -
 schema sync may cause data loss if you don't use it wisely.
 Check which sql queries it will run before running on production.
 
@@ -285,7 +285,7 @@ typeorm query "SELECT * FROM USERS"
 
 ## Clear cache
 
-If you are using `QueryBuilder` caching, sometimes you may want to clear everything stored in the cache. 
+If you are using `QueryBuilder` caching, sometimes you may want to clear everything stored in the cache.
 You can do it using the following command:
 
 ```
