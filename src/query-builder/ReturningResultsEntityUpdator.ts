@@ -179,7 +179,7 @@ export class ReturningResultsEntityUpdator {
      */
     getUpdationReturningColumns(): ColumnMetadata[] {
         return this.expressionMap.mainAlias!.metadata.columns.filter(column => {
-            return column.isUpdateDate || column.isVersion;
+            return column.isUpdateDate || column.isVersion || column.isGenerated;
         });
     }
 
