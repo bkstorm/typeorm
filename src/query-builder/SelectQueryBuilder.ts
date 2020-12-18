@@ -383,7 +383,7 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
      * You also need to specify an alias of the joined data.
      * Optionally, you can add condition and parameters used in condition.
      */
-    leftLateralJoin(subQueryFactory: (qb: SelectQueryBuilder<any>) => SelectQueryBuilder<any>, alias: string, condition?: string, parameters?: ObjectLiteral): this {
+    leftJoinLateral(subQueryFactory: (qb: SelectQueryBuilder<any>) => SelectQueryBuilder<any>, alias: string, condition?: string, parameters?: ObjectLiteral): this {
         this.join("LEFT", subQueryFactory, alias, condition ? condition : "true", parameters, undefined, undefined, true);
         return this;
     }
