@@ -45,6 +45,11 @@ export class JoinAttribute {
      */
     isMappingMany?: boolean;
 
+    /**
+     * Supports lateral join (postgresql only).
+     */
+    isLateral?: boolean;
+
     // -------------------------------------------------------------------------
     // Constructor
     // -------------------------------------------------------------------------
